@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+    <div class="container">
+        <a class="navbar-brand mr-4" href="/">Profesor</a>
+        <div class="collapse navbar-collapse mr-auto" id="navbarToggle">
+        <div class="navbar-nav mr-auto">
+            <a class="nav-item nav-link" href="/profesor/">Home</a>
+            <a class="nav-item nav-link" href="/profesor-predmet-list/{{predmet_id}}/svi/">Svi</a>
+            <a class="nav-item nav-link" href="/profesor-predmet-list/{{predmet_id}}/polozili/">Položili</a>
+            <a class="nav-item nav-link" href="/profesor-predmet-list/{{predmet_id}}/izgubili-potpis/">Izgubili potpis</a>
+            <a class="nav-item nav-link" href="/profesor-predmet-list/{{predmet_id}}/dobili-potpis/">Dobili potpis ali nisu položili</a>
+        </div>
+        <!-- Navbar Right Side -->
+        <div class="navbar-nav ml-auto">
+            {% if user.is_authenticated%}
+                <a class="nav-item nav-link" href="/logout">Logout</a>		
+            {% else %}
+                <a class="nav-item nav-link" href="/login">Login</a>
+            {% endif %}
+        </div>
+        </div>
+    </div>
+    </nav>
+</header>
+
+<div class="container">
+    <h2>Prijavljeni studenti:</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="upisani-studenti-container">
+            {% for s in students %}
+            <span class="upisani-studenti-student">{{s.student_id}} Status predmeta: {{ s.status }}
+                <select name="status">
+                    <option selected disabled hidden>Odabir</option>
+                    <option value="polozen">Položio</option>
+                    <option value="izgubio_potpis">Izgubio potpis</option>
+                    <option value="potpis">Dobio potpis ali nije položio</option>
+                </select>
+                <button type="submit" name="status-change" value={{s.student_id.id}}>Promijeni status</button>
+                {% if s.status == 'Upisan' or s.status == 'Dobio potpis ali nije položen' %}
+                    <button type="submit" name="remove" value={{s.student_id.id}}>&times;</button>
+                {% endif %}
+            </span>
+            {% endfor %}
+        </div>
+    </form>
+</div>
+{% endblock %}

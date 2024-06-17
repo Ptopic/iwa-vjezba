@@ -1,0 +1,23 @@
+[
+    {
+		"model": "app1.uloge",
+		"pk": 1,
+		"fields": {
+			"role": "admin"
+		}
+	},
+    {
+		"model": "app1.uloge",
+		"pk": 2,
+		"fields": {
+			"role": "prof"
+		}
+	},
+    {
+		"model": "app1.uloge",
+		"pk": 3,
+		"fields": {
+			"role": "stu"
+		}
+	}
+]

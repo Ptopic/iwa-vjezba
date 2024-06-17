@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block content %}
+<header class="site-header">
+	<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+		<div class="container">
+			<a class="navbar-brand mr-4" href="/">Admin</a>
+			<div class="collapse navbar-collapse mr-auto" id="navbarToggle">
+				<div class="navbar-nav mr-auto">
+					<a class="nav-item nav-link" href="/">Back</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+</header>
+
+<div class="container">
+	<h2>Studenti koji su upisani na predmet : {{ predmet.name }}</h2>
+
+	{% for student in student_list %}
+	<div class="border border-steel mb-3 p-2"> {{ student.username }} </div>
+	{% endfor %}
+
+	<h2>Studenti koji su polozili predmet : {{ predmet.name }}</h2>
+
+	{% for student in polozili_predmet %}
+	<div class="border border-steel mb-3 p-2"> {{ student.username }} </div>
+	{% endfor %}
+</div>
+
+{% endblock %}

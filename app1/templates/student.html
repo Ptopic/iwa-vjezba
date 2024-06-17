@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+	<header class="site-header">
+		<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+		<div class="container">
+			<a class="navbar-brand mr-4" href="/">Student</a>
+			<div class="collapse navbar-collapse mr-auto" id="navbarToggle">
+			<div class="navbar-nav mr-auto">
+				<a class="nav-item nav-link" href="/">Home</a>
+			</div>
+			<!-- Navbar Right Side -->
+			<div class="navbar-nav ml-auto">
+				{% if user.is_authenticated%}
+					<a class="nav-item nav-link" href="/logout">Logout</a>		
+				{% else %}
+					<a class="nav-item nav-link" href="/login">Login</a>
+				{% endif %}
+			</div>
+			</div>
+		</div>
+		</nav>
+	</header>
+
+	<div class="flex-custom" style="width: 100%; display: flex; flex-direction: row; align-items: center; justify-items: center;">
+		<div class="left-container" style="display: flex; flex-direction: column; width: 50%; height: 90dvh">
+			<h2>Predmeti:</h2>
+			<div class="left" style="width: 100%; overflow: auto; height: 90dvh;">
+				<form method="POST">
+					{% csrf_token %}
+					{% for s in subjects %}
+					<div class="subject">
+						<button type="submit" name="add" value={{s.id}} style="margin-bottom: 20px; margin-right: 10px; border: 1px solid black; font-size: 30px;">&#43;</button>
+						{{ s.name }}
+					</div>
+					{% endfor %}
+				</form>
+			</div>
+		</div>
+
+		<div class="right-container" style="display: flex; flex-direction: column; width: 50%; height: 90dvh; margin-left: 20px;">
+			<h2>{{ user.username }}</h2>
+			<div class="right" style="width: 50%; overflow: auto; height: 90dvh;"><div class="upisi">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% for i in range %}
+                    <h3>Semestar {{ i }}:</h3>
+                    <div class="sem">
+                        {% for u in upisi %}
+                        {% if user.status == 'red' %}
+                            {% if u.sem_red == i %}
+                            <div class="sem-predmet">
+                            <button type="submit" name="remove" value="{{u.id}}">&times;</button>
+                            <span>{{ u.name }}</span><br>
+                            </div>  
+                            {% endif %}
+                        {% elif user.status == 'izv' %}
+                            {% if u.sem_izv == i %}
+                            <div class="sem-predmet">
+                            <button type="submit" name="remove" value="{{u.id}}">&times;</button>
+                            <span>{{ u.name }}</span><br>
+                            </div>
+                            {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </form>
+            </div></div>
+		</div>
+
+	</div>
+{% endblock %}

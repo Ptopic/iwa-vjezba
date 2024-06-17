@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+    <div class="container">
+        <a class="navbar-brand mr-4" href="/">Admin</a>
+        <div class="collapse navbar-collapse mr-auto" id="navbarToggle">
+        <div class="navbar-nav mr-auto">
+            <a class="nav-item nav-link" href="/">Home</a>
+            <a class="nav-item nav-link" href="/dodajPredmet">Dodaj Predmet</a>
+            <a class="nav-item nav-link" href="/listaStudenata">Lista Studenata</a>
+            <a class="nav-item nav-link active" href="/dodajStudenta">Dodaj Studenta</a>
+            <a class="nav-item nav-link" href="/listaProfesora">Lista Profesora</a>
+			<a class="nav-item nav-link" href="/dodajProfesora">Dodaj Profesora</a>
+            <a class="nav-item nav-link" href="/dodijeliPredmet">Dodijeli Predmet Profesoru</a>
+        </div>
+        <!-- Navbar Right Side -->
+        <div class="navbar-nav ml-auto">
+            {% if user.is_authenticated%}
+                <a class="nav-item nav-link" href="/logout">Logout</a>		
+            {% else %}
+                <a class="nav-item nav-link" href="/login">Login</a>
+            {% endif %}
+        </div>
+        </div>
+    </div>
+    </nav>
+</header>
+
+<h2>Dodaj studenta:</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+        <input class="btn btn-outline-info" type="submit"></input>
+</form>
+{% endblock %}

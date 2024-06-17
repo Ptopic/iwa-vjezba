@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+	<header class="site-header">
+		<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+		<div class="container">
+			<a class="navbar-brand mr-4" href="/">Admin</a>
+			<div class="collapse navbar-collapse mr-auto" id="navbarToggle">
+			<div class="navbar-nav mr-auto">
+				<a class="nav-item nav-link active" href="/">Home</a>
+				<a class="nav-item nav-link" href="/dodajPredmet">Dodaj Predmet</a>
+				<a class="nav-item nav-link" href="/listaStudenata">Lista Studenata</a>
+				<a class="nav-item nav-link" href="/dodajStudenta">Dodaj Studenta</a>
+				<a class="nav-item nav-link" href="/listaProfesora">Lista Profesora</a>
+				<a class="nav-item nav-link" href="/dodajProfesora">Dodaj Profesora</a>
+				<a class="nav-item nav-link" href="/dodijeliPredmet">Dodijeli Predmet Profesoru</a>
+			</div>
+			<!-- Navbar Right Side -->
+			<div class="navbar-nav ml-auto">
+				{% if user.is_authenticated%}
+					<a class="nav-item nav-link" href="/logout">Logout</a>		
+				{% else %}
+					<a class="nav-item nav-link" href="/login">Login</a>
+				{% endif %}
+			</div>
+			</div>
+		</div>
+		</nav>
+	</header>
+	<h2>Predmeti:</h2>
+
+	{% if lista_predmeta %} 
+	<div class="container-fluid">
+		{% for p in lista_predmeta %}
+		<div class="container-fluid p-1 mb-5"><h1 class="display-6">{{ p.name }} | Kod: {{ p.kod }} | Program: {{ p.program }} | ECTS: {{ p.ects }}
+			| Semestar redovni: {{ p.sem_red }} | Semestar izvanredni: {{ p.sem_izv }} | Izborni: {{ p.izborni }}</h1>
+			 <a href="/predmet/{{p.id}}">Uredi</a>
+			 <a href="/predmet-stu-list/{{p.id}}">Vidi listu studenta</a>
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}
+{% endblock %}

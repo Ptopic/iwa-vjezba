@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+	<header class="site-header">
+		<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+		<div class="container">
+			<a class="navbar-brand mr-4" href="/">Profesor</a>
+			<div class="collapse navbar-collapse mr-auto" id="navbarToggle">
+			<div class="navbar-nav mr-auto">
+				<a class="nav-item nav-link" href="/">Home</a>
+			</div>
+			<!-- Navbar Right Side -->
+			<div class="navbar-nav ml-auto">
+				{% if user.is_authenticated%}
+					<a class="nav-item nav-link" href="/logout">Logout</a>		
+				{% else %}
+					<a class="nav-item nav-link" href="/login">Login</a>
+				{% endif %}
+			</div>
+			</div>
+		</div>
+		</nav>
+	</header>
+
+	{% for p in prijavljeniPredmeti %}
+	<div class="border border-steel mb-3 p-2">
+        {{ p.name }}
+        <a href="/profesor-predmet-list/{{p.id}}/svi">Vidi popis studenata</a>
+    </div>
+	{% endfor %}
+{% endblock %}
